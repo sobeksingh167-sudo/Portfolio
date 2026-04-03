@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>SOBEK | Visual Storyteller & Creative Director</title>
-  <meta name="description" content="Sobek Singh - Filmmaker, Creative Director, Fashion Photographer, Commercial Spec Ad Creator, and Concert Photographer. Visual storytelling across films, fashion, music, and branded content.">
+  <meta name="description" content="Sobek Singh - Filmmaker, Creative Director, Fashion Photographer, Commercial Spec Ad Creator, and Concert Photographer.">
   <meta name="keywords" content="filmmaker, creative director, fashion photographer, concert photographer, spec ads, commercial photographer, visual storytelling, Sobek Singh">
   <meta name="author" content="Sobek Singh">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://sobeksingh.photography">
   <meta property="og:title" content="Sobek Singh | Visual Storyteller & Creative Director">
-  <meta property="og:description" content="Filmmaker, Creative Director, Fashion & Concert Photographer, Commercial Spec Ad Creator. Compelling visual narratives across mediums.">
+  <meta property="og:description" content="Filmmaker, Creative Director, Fashion & Concert Photographer, Commercial Spec Ad Creator.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ---------- LIGHT/DARK MODE VARIABLES - DARK MODE BY DEFAULT ---------- */
+    /* ---------- VARIABLES ---------- */
     :root {
       --bg: #000000;
       --bg-gradient-start: #0a0a0a;
@@ -35,14 +35,10 @@
       --highlight-border: #fff;
       --info-row-border: rgba(255,255,255,0.08);
       --hero-overlay: brightness(0.4) contrast(1.2) grayscale(0.2);
+      /* iOS FIX: Use named classes instead of CSS var for filter, vars don't animate well on Safari */
       --img-filter: grayscale(100%);
       --img-hover-filter: grayscale(0%);
       --hero-title-color: #ffffff;
-      --hero-title-shadow: 0 0 30px rgba(255,255,255,0.4);
-      --tagline-text-color: #ffffff;
-      --tagline-gradient-start: #ffffff;
-      --tagline-gradient-mid: #dddddd;
-      --tagline-gradient-end: #ffffff;
     }
     body.light-mode {
       --bg: #f5f7fa;
@@ -65,13 +61,8 @@
       --hero-overlay: brightness(0.7) contrast(1.1) grayscale(0.1);
       --img-filter: grayscale(30%);
       --img-hover-filter: grayscale(0%);
-      --hero-title-color: #ffffff;
-      --hero-title-shadow: 0 0 30px rgba(0,0,0,0.5);
-      --tagline-text-color: #ffffff;
-      --tagline-gradient-start: #ffffff;
-      --tagline-gradient-mid: #f0f0f0;
-      --tagline-gradient-end: #ffffff;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
     body {
@@ -80,43 +71,48 @@
       color: var(--text);
       overflow-x: hidden;
       transition: background-color 0.4s ease, color 0.3s ease;
+      /* iOS FIX: prevent bounce/elastic scroll from revealing white */
+      background-attachment: fixed;
     }
-    /* ---------- CUSTOM CURSOR (hidden on touch) ---------- */
+
+    /* ---------- CUSTOM CURSOR (desktop only) ---------- */
     .cursor {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       background: var(--accent);
-      position: fixed;
-      border-radius: 50%;
+      position: fixed; border-radius: 50%;
       pointer-events: none;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 12px var(--accent), 0 0 24px rgba(255,255,255,0.4);
+      /* iOS FIX: removed mix-blend-mode:difference which causes Safari rendering bugs */
+      box-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 24px rgba(255,255,255,0.4);
       z-index: 9999;
-      transition: width 0.3s ease, height 0.3s ease, background 0.2s ease;
-      mix-blend-mode: difference;
+      transition: width 0.3s ease, height 0.3s ease;
     }
-    body.light-mode .cursor { background: #ffffff; box-shadow: 0 0 12px rgba(255,255,255,0.8); }
-    .cursor.hover { width: 48px; height: 48px; background: rgba(255,255,255,0.15); backdrop-filter: blur(4px); mix-blend-mode: normal; box-shadow: 0 0 28px rgba(255,255,255,0.6); }
-    body.light-mode .cursor.hover { background: rgba(0,0,0,0.1); box-shadow: 0 0 28px rgba(0,0,0,0.2); }
+    .cursor.hover {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.15);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 28px rgba(255,255,255,0.6);
+    }
+
     /* ---------- NAVBAR ---------- */
     .navbar {
-      position: fixed;
-      width: 100%;
-      padding: 22px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: fixed; width: 100%; padding: 22px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       background: rgba(0,0,0,0.55);
       border-bottom: 1px solid var(--border-light);
       z-index: 1000;
-      transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), background 0.3s ease;
+      transition: all 0.5s cubic-bezier(0.2,0.9,0.4,1.1), background 0.3s ease;
+      /* iOS FIX: force GPU layer */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
-    body.light-mode .navbar { background: rgba(0,0,0,0.65); backdrop-filter: blur(16px); }
-    .navbar.scrolled { padding: 14px 60px; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
-    body.light-mode .navbar.scrolled { background: rgba(0,0,0,0.8); }
+    body.light-mode .navbar { background: rgba(0,0,0,0.65); }
+    .navbar.scrolled { padding: 14px 60px; background: rgba(0,0,0,0.85); border-bottom: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
     .navbar-right { display: flex; align-items: center; gap: 20px; }
-    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
     .logo-container:hover { transform: scale(1.02); }
     .logo-img { height: 42px; width: auto; filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(255,255,255,0.6)); transition: filter 0.4s ease; animation: subtleGlow 3s ease-in-out infinite alternate; }
     @keyframes subtleGlow { 0% { filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(255,255,255,0.3)); } 100% { filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(255,255,255,0.7)); } }
@@ -124,10 +120,10 @@
     .logo-container:hover .logo-text { letter-spacing: 3px; text-shadow: 0 0 10px rgba(255,255,255,0.8); }
     .nav-links { display: flex; gap: 2.8rem; list-style: none; }
     .nav-link { font-size: 0.9rem; font-weight: 500; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s ease; color: rgba(255,255,255,0.7); text-decoration: none; position: relative; padding: 4px 0; }
-    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: #ffffff; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 6px #ffffff; }
-    .nav-link:hover::after { width: 100%; }
-    .nav-link:hover { color: #ffffff; text-shadow: 0 0 6px #ffffff; }
-    .theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); backdrop-filter: blur(8px); flex-shrink: 0; }
+    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: #ffffff; transition: width 0.4s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 0 6px #ffffff; }
+    .nav-link:hover::after, .nav-link.touch-active::after { width: 100%; }
+    .nav-link:hover, .nav-link.touch-active { color: #ffffff; text-shadow: 0 0 6px #ffffff; }
+    .theme-toggle { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.2,0.9,0.4,1.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); flex-shrink: 0; }
     .theme-toggle:hover { transform: scale(1.08); border-color: #ffffff; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
     .theme-toggle svg { width: 22px; height: 22px; stroke: #ffffff; fill: none; stroke-width: 1.8; transition: all 0.3s ease; }
     .menu-toggle { display: none; background: none; border: none; cursor: pointer; width: 32px; height: 24px; position: relative; z-index: 1001; flex-shrink: 0; }
@@ -138,59 +134,117 @@
     .menu-toggle.active span:nth-child(1) { transform: rotate(45deg); top: 11px; }
     .menu-toggle.active span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
     .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg); bottom: 11px; }
+
     /* ---------- HERO ---------- */
     .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; position: relative; overflow: hidden; }
     .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; filter: var(--hero-overlay); animation: cinematicZoom 24s ease-in-out infinite; }
     @keyframes cinematicZoom { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-    .hero h2 { font-family: 'Orbitron', monospace; font-size: clamp(2.5rem, 12vw, 5rem); margin-top: 15px; letter-spacing: 6px; color: #ffffff !important; font-weight: 800; text-shadow: 0 0 30px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.5); opacity: 0; transform: translateY(40px); animation: fadeUpTitle 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    @keyframes fadeUpTitle { 0% { opacity: 0; transform: translateY(50px); letter-spacing: 12px; filter: blur(3px); } 100% { opacity: 1; transform: translateY(0); letter-spacing: 6px; filter: blur(0); } }
+    .hero h2 { font-family: 'Orbitron', monospace; font-size: clamp(2.5rem, 12vw, 5rem); margin-top: 15px; letter-spacing: 6px; color: #ffffff; font-weight: 800; text-shadow: 0 0 30px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.5); opacity: 0; transform: translateY(40px); animation: fadeUpTitle 1.2s cubic-bezier(0.16,1,0.3,1) forwards; }
+    @keyframes fadeUpTitle { 0% { opacity: 0; transform: translateY(50px); letter-spacing: 12px; } 100% { opacity: 1; transform: translateY(0); letter-spacing: 6px; } }
     .tagline-wrapper { overflow: hidden; margin-top: 24px; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; }
-    .stagger-word { font-size: clamp(0.85rem, 4vw, 1.15rem); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #ffffff !important; display: inline-block; opacity: 0; transform: translateY(30px); filter: blur(4px); animation: wordFadeUpIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-    @keyframes wordFadeUpIn { 0% { opacity: 0; transform: translateY(30px); filter: blur(6px); letter-spacing: 6px; } 100% { opacity: 1; transform: translateY(0); filter: blur(0); letter-spacing: 2px; } }
+    .stagger-word { font-size: clamp(0.85rem, 4vw, 1.15rem); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #ffffff; display: inline-block; opacity: 0; transform: translateY(30px); animation: wordFadeUpIn 0.7s cubic-bezier(0.16,1,0.3,1) forwards; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    @keyframes wordFadeUpIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+
     /* ---------- SECTIONS ---------- */
     .section { padding: 110px 60px; position: relative; }
     .container { max-width: 1400px; margin: 0 auto; }
     .section h2 { font-family: 'Orbitron', monospace; font-size: 2.4rem; margin-bottom: 2.5rem; letter-spacing: 2px; display: inline-block; position: relative; overflow: hidden; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; color: var(--accent); }
     .section h2.animate-in { opacity: 1; transform: translateY(0); }
-    .section h2::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s; box-shadow: 0 0 12px var(--accent); }
+    .section h2::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s; box-shadow: 0 0 12px var(--accent); }
     .section h2.animate-in::after { width: 100%; }
-    /* Cards */
+
+    /* ---------- CARDS ---------- */
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 20px; }
-    .card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 28px; padding: 2rem; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; opacity: 0; transform: translateY(50px); position: relative; overflow: hidden; }
+    .card { background: var(--card-bg); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 28px; padding: 2rem; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease; cursor: pointer; opacity: 0; transform: translateY(50px); position: relative; overflow: hidden; }
     .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); transition: left 0.7s ease; }
-    .card:hover::before { left: 100%; }
+    .card:hover::before, .card.touch-active::before { left: 100%; }
     .card.animate-in { opacity: 1; transform: translateY(0); transition-delay: calc(var(--index, 0) * 0.08s); }
-    .card:hover { transform: translateY(-10px) scale(1.01); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px var(--primary-glow); }
+    /* iOS FIX: .touch-active replaces :hover for cards on touch devices */
+    .card:hover, .card.touch-active { transform: translateY(-10px) scale(1.01); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px var(--primary-glow); }
     .card h3 { font-family: 'Orbitron', monospace; font-size: 1.5rem; margin-bottom: 0.9rem; color: var(--accent); letter-spacing: 1px; }
     .card p { color: var(--text-muted); line-height: 1.5; }
-    /* Gallery */
+
+    /* ---------- GALLERY ---------- */
     .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin-top: 2rem; }
-    .gallery-item { position: relative; overflow: hidden; border-radius: 28px; cursor: pointer; aspect-ratio: 4 / 5; background: #0a0a0a; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(40px); }
+    .gallery-item { position: relative; overflow: hidden; border-radius: 28px; cursor: pointer; aspect-ratio: 4/5; background: #0a0a0a; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); opacity: 0; transform: translateY(40px); }
     .gallery-item.animate-in { opacity: 1; transform: translateY(0); }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease; filter: var(--img-filter); }
-    .gallery-item:hover img { transform: scale(1.08); filter: var(--img-hover-filter); }
-    .gallery-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 1.5rem; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-    .gallery-item:hover .gallery-overlay { transform: translateY(0); }
+
+    /* iOS FIX: Use class-based filter instead of :hover on img directly */
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      /* iOS FIX: Use -webkit-filter as well */
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), -webkit-filter 0.6s ease, filter 0.6s ease;
+      /* iOS FIX: GPU acceleration for smooth filter transition */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: filter, transform;
+    }
+    /* Activated via JS .touch-active class on parent OR :hover on desktop */
+    .gallery-item:hover img,
+    .gallery-item.touch-active img {
+      transform: scale(1.08) translateZ(0);
+      -webkit-filter: grayscale(0%);
+      filter: grayscale(0%);
+    }
+
+    .gallery-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 1.5rem;
+      /* iOS FIX: transform instead of display:none for smoother animation */
+      transform: translateY(100%);
+      -webkit-transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), -webkit-transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery-item:hover .gallery-overlay,
+    .gallery-item.touch-active .gallery-overlay {
+      transform: translateY(0);
+      -webkit-transform: translateY(0);
+    }
     .gallery-overlay p { color: white; font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; }
-    /* About */
+
+    /* ---------- ABOUT ---------- */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
-    .about-text p { line-height: 1.7; color: var(--text-muted); margin-bottom: 1.5rem; opacity: 0; transform: translateX(-18px); animation: slideReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .about-text p { line-height: 1.7; color: var(--text-muted); margin-bottom: 1.5rem; opacity: 0; transform: translateX(-18px); animation: slideReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
     .about-text p:nth-child(1) { animation-delay: 0.1s; }
     .about-text p:nth-child(2) { animation-delay: 0.2s; }
     .about-text p:nth-child(3) { animation-delay: 0.3s; }
     @keyframes slideReveal { to { opacity: 1; transform: translateX(0); } }
     .highlight-text { border-left: 3px solid var(--highlight-border); padding-left: 1.3rem; color: var(--text); }
     .about-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-    .about-img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 20px; filter: var(--img-filter); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; opacity: 0; transform: scale(0.96); animation: fadeScaleIn 0.7s forwards; }
+
+    /* iOS FIX: same class-based approach for about images */
+    .about-img {
+      width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: 20px;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      transition: -webkit-filter 0.6s ease, filter 0.6s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+      cursor: pointer;
+      opacity: 0; transform: scale(0.96);
+      animation: fadeScaleIn 0.7s forwards;
+      /* iOS FIX: GPU layer */
+      -webkit-transform: translateZ(0);
+      will-change: filter, transform;
+    }
     .about-img:nth-child(1) { animation-delay: 0.1s; }
     .about-img:nth-child(2) { animation-delay: 0.2s; }
     .about-img:nth-child(3) { animation-delay: 0.3s; }
     @keyframes fadeScaleIn { to { opacity: 1; transform: scale(1); } }
-    .about-img:hover { filter: grayscale(0%); transform: scale(1.02); box-shadow: 0 0 28px var(--primary-glow); }
-    .about-img-wide { grid-column: span 2; aspect-ratio: 16 / 9; }
-    /* Info Grid */
+    .about-img:hover,
+    .about-img.touch-active {
+      -webkit-filter: grayscale(0%);
+      filter: grayscale(0%);
+      transform: scale(1.02) translateZ(0);
+      box-shadow: 0 0 28px var(--primary-glow);
+    }
+    .about-img-wide { grid-column: span 2; aspect-ratio: 16/9; }
+
+    /* ---------- INFO GRID ---------- */
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
-    .info-card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.8rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(30px); animation: cardGlide 0.6s forwards; }
+    .info-card { background: var(--card-bg); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.8rem; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); opacity: 0; transform: translateY(30px); animation: cardGlide 0.6s forwards; }
     .info-card:nth-child(1) { animation-delay: 0.2s; }
     .info-card:nth-child(2) { animation-delay: 0.3s; }
     @keyframes cardGlide { to { opacity: 1; transform: translateY(0); } }
@@ -202,30 +256,35 @@
     .info-row span:first-child { font-weight: 500; letter-spacing: 0.3px; color: var(--text); }
     .info-row span:last-child { text-align: right; font-weight: 400; word-break: break-word; max-width: 60%; }
     .info-row:hover { border-bottom-color: var(--accent); transform: translateX(4px); }
-    /* Footer */
+
+    /* ---------- FOOTER ---------- */
     footer { background: var(--footer-bg); text-align: center; padding: 4rem 2rem; border-top: 1px solid var(--border-light); position: relative; transition: background 0.4s ease; }
     .footer-logo { font-family: 'Orbitron', monospace; font-size: 2rem; letter-spacing: 4px; margin-bottom: 1rem; color: var(--accent); animation: softPulse 3s infinite; }
     @keyframes softPulse { 0%, 100% { text-shadow: 0 0 4px rgba(255,255,255,0.4); } 50% { text-shadow: 0 0 18px rgba(255,255,255,0.7); } }
     .social-links { display: flex; justify-content: center; gap: 1.8rem; margin: 2rem 0; flex-wrap: wrap; }
-    .social-link { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--social-bg); backdrop-filter: blur(8px); border: 1px solid var(--social-border); border-radius: 50%; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .social-link { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--social-bg); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--social-border); border-radius: 50%; transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
     .social-link svg, .social-link img { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.5; transition: transform 0.3s ease; }
-    .social-link:hover { background: var(--accent); transform: scale(1.1) translateY(-4px); box-shadow: 0 0 30px var(--primary-glow); }
-    .social-link:hover svg, .social-link:hover img { stroke: var(--bg); transform: scale(1.05); filter: brightness(0) invert(0); }
+    .social-link:hover, .social-link.touch-active { background: var(--accent); transform: scale(1.1) translateY(-4px); box-shadow: 0 0 30px var(--primary-glow); }
+    .social-link:hover svg, .social-link.touch-active svg { stroke: var(--bg); transform: scale(1.05); }
+    .social-link:hover img, .social-link.touch-active img { filter: brightness(0) invert(0); transform: scale(1.05); }
     .contact-item { display: inline-flex; align-items: center; gap: 10px; color: var(--text-muted); text-decoration: none; padding: 0.5rem 1.2rem; border-radius: 40px; background: var(--glass); transition: all 0.3s ease; margin: 0 5px 8px; }
     .contact-item:hover { color: var(--accent); background: var(--glass-border); transform: translateY(-2px); }
-    /* Lightbox */
-    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(28px); z-index: 2000; justify-content: center; align-items: center; cursor: pointer; opacity: 0; transition: opacity 0.3s ease; }
+
+    /* ---------- LIGHTBOX ---------- */
+    .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); -webkit-backdrop-filter: blur(28px); backdrop-filter: blur(28px); z-index: 2000; justify-content: center; align-items: center; cursor: pointer; opacity: 0; transition: opacity 0.3s ease; }
     .lightbox.active { display: flex; animation: fadeInModal 0.3s forwards; }
     @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-    .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; animation: zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; animation: zoomIn 0.4s cubic-bezier(0.16,1,0.3,1); /* iOS FIX: no filter transform issues */ }
     @keyframes zoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .close-lightbox { position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: white; cursor: pointer; transition: all 0.3s ease; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); }
     .close-lightbox:hover { transform: rotate(90deg); background: rgba(255,255,255,0.25); }
+
     [id] { scroll-margin-top: 100px; }
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 10px; }
-    /* ---------- RESPONSIVE: iOS & mobile perfection ---------- */
+
+    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 1024px) {
       .section { padding: 70px 40px; }
       .navbar { padding: 18px 30px; }
@@ -240,8 +299,9 @@
       .theme-toggle svg { width: 20px; height: 20px; }
       .nav-links {
         display: none; flex-direction: column; position: absolute; top: 70px; left: 16px; right: 16px;
-        background: rgba(0,0,0,0.95); backdrop-filter: blur(24px); padding: 1.8rem; border-radius: 24px;
-        gap: 1.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(0,0,0,0.95); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+        padding: 1.8rem; border-radius: 24px; gap: 1.5rem; text-align: center;
+        border: 1px solid rgba(255,255,255,0.2);
       }
       .nav-links.active { display: flex; }
       .section { padding: 50px 20px; }
@@ -260,7 +320,6 @@
       .section { padding: 40px 16px; }
       .info-row { flex-direction: column; align-items: flex-start; gap: 4px; }
       .info-row span:last-child { max-width: 100%; text-align: left; font-size: 0.85rem; }
-      .info-row:hover { transform: translateX(2px); }
       .contact-item { padding: 0.4rem 1rem; font-size: 0.8rem; }
       .footer-logo { font-size: 1.5rem; }
     }
@@ -282,17 +341,19 @@
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Light/Dark mode">
-      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
     <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+
 <main>
   <section class="hero" id="hero">
     <img class="hero-bg" src="https://github.com/sobeksingh167-sudo/img/blob/main/COVER2.jpeg?raw=true" alt="Sobek Singh Visual Storyteller">
     <h2>SOBEK SINGH</h2>
     <div class="tagline-wrapper" id="taglineWrapper"></div>
   </section>
+
   <section id="about" class="section">
     <div class="container">
       <h2>THE CREATIVE FORCE</h2>
@@ -324,6 +385,7 @@
       </div>
     </div>
   </section>
+
   <section id="services" class="section">
     <div class="container">
       <h2>WHAT I DO</h2>
@@ -337,6 +399,7 @@
       </div>
     </div>
   </section>
+
   <section id="gallery" class="section">
     <div class="container">
       <h2>PHOTO PORTFOLIO</h2>
@@ -350,64 +413,235 @@
       </div>
     </div>
   </section>
+
   <footer id="contact">
     <div class="footer-logo">SOBEK</div>
     <div class="social-links">
-      <a href="https://www.instagram.com/sobekk._?igsh=bnk2MTZ3NWZnNWJy&utm_source=qr" target="_blank" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-      <a href="http://linkedin.com/in/sobek-singh-a752123ba" target="_blank" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-      <a href="https://drive.google.com/drive/folders/1_f-cDMg2BIFlyn1mjKn7Tucbn5qGKMd7" target="_blank" class="social-link" aria-label="Google Drive Portfolio"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/google-drive.png?raw=true" alt="Google Drive" style="width:24px; height:24px; filter: brightness(0) invert(1);"></a>
+      <a href="https://www.instagram.com/sobekk._?igsh=bnk2MTZ3NWZnNWJy&utm_source=qr" target="_blank" class="social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+      <a href="http://linkedin.com/in/sobek-singh-a752123ba" target="_blank" class="social-link" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1_f-cDMg2BIFlyn1mjKn7Tucbn5qGKMd7" target="_blank" class="social-link" aria-label="Google Drive Portfolio">
+        <img src="https://github.com/sobeksingh167-sudo/img/blob/main/google-drive.png?raw=true" alt="Google Drive" style="width:24px;height:24px;filter:brightness(0) invert(1);">
+      </a>
     </div>
-    <div><a href="mailto:Sobeksingh4@gmail.com" class="contact-item">📧 Sobeksingh4@gmail.com</a> <a href="tel:+919702188621" class="contact-item">📞 +91 97021 88621</a></div>
-    <p style="margin-top: 2rem; opacity:0.7;">Creative Director | Filmmaker | Fashion & Concert Photographer | Commercial Spec Ad Creator</p>
+    <div>
+      <a href="mailto:Sobeksingh4@gmail.com" class="contact-item">📧 Sobeksingh4@gmail.com</a>
+      <a href="tel:+919702188621" class="contact-item">📞 +91 97021 88621</a>
+    </div>
+    <p style="margin-top:2rem;opacity:0.7;">Creative Director | Filmmaker | Fashion & Concert Photographer | Commercial Spec Ad Creator</p>
   </footer>
 </main>
-<div class="lightbox" id="lightbox"><span class="close-lightbox">&times;</span><img class="lightbox-img" id="lightbox-img" alt=""></div>
+
+<div class="lightbox" id="lightbox">
+  <span class="close-lightbox">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" alt="">
+</div>
+
 <script>
-  (function() {
-    const taglineWords = "Filmmaker | Photographer | Visual Storyteller".split(' ');
-    const wrapper = document.getElementById("taglineWrapper");
-    if(wrapper) {
-      wrapper.innerHTML = '';
-      taglineWords.forEach((word, idx) => {
-        const span = document.createElement('span');
-        span.className = 'stagger-word';
-        span.textContent = word;
-        span.style.animationDelay = `${0.3 + idx * 0.12}s`;
-        wrapper.appendChild(span);
-      });
+(function() {
+  'use strict';
+
+  /* ---- TAGLINE ---- */
+  const taglineWords = "Filmmaker | Photographer | Visual Storyteller".split(' ');
+  const wrapper = document.getElementById("taglineWrapper");
+  if (wrapper) {
+    taglineWords.forEach((word, idx) => {
+      const span = document.createElement('span');
+      span.className = 'stagger-word';
+      span.textContent = word;
+      span.style.animationDelay = (0.3 + idx * 0.12) + 's';
+      wrapper.appendChild(span);
+    });
+  }
+
+  /* ---- THEME ---- */
+  const themeToggle = document.getElementById('themeToggle');
+  const updateIcon = (isLight) => {
+    if (!themeToggle) return;
+    themeToggle.innerHTML = isLight
+      ? `<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+      : `<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  };
+  const loadTheme = () => {
+    const saved = localStorage.getItem('sobek-theme');
+    const isLight = saved === 'light';
+    document.body.classList.toggle('light-mode', isLight);
+    updateIcon(isLight);
+    if (!saved) localStorage.setItem('sobek-theme', 'dark');
+  };
+  if (themeToggle) themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    localStorage.setItem('sobek-theme', isLight ? 'light' : 'dark');
+    updateIcon(isLight);
+  });
+  loadTheme();
+
+  /* ---- CURSOR (desktop only) ---- */
+  const cursor = document.getElementById('cursor');
+  const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (!isTouchDevice() && cursor) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('.card, .gallery-item, .social-link, .nav-link, .logo-container, .contact-item, .about-img').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  }
+
+  /* ---- NAVBAR SCROLL ---- */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  /* ---- MOBILE MENU ---- */
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      if (navLinks) navLinks.classList.toggle('active');
+    });
+  }
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          if (navLinks) navLinks.classList.remove('active');
+          if (menuToggle) menuToggle.classList.remove('active');
+        }
+      } else if (href === '#') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (navLinks) navLinks.classList.remove('active');
+        if (menuToggle) menuToggle.classList.remove('active');
+      }
+    });
+  });
+
+  /* ---- INTERSECTION OBSERVER (animate-in) ---- */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
+  document.querySelectorAll('.section h2, .card, .gallery-item').forEach(el => observer.observe(el));
+  document.querySelectorAll('.card').forEach((card, i) => card.style.setProperty('--index', i));
+
+  /* ---- iOS / SAFARI TOUCH FIX ----
+     Safari on iOS doesn't fire :hover on touch. We use touchstart/touchend
+     to toggle a .touch-active class, which mirrors all the hover CSS.
+     For gallery items & about images: tap = show color + overlay (toggle).
+     Tap again or tap elsewhere = revert to B&W.
+  */
+  let activeTouchEl = null; // track currently "hovered" touch element
+
+  const addTouchHover = (selector, toggleMode = false) => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('touchstart', (e) => {
+        if (toggleMode) {
+          // For gallery + about images: tap to toggle color
+          if (activeTouchEl && activeTouchEl !== el) {
+            activeTouchEl.classList.remove('touch-active');
+          }
+          if (el.classList.contains('touch-active')) {
+            el.classList.remove('touch-active');
+            activeTouchEl = null;
+          } else {
+            el.classList.add('touch-active');
+            activeTouchEl = el;
+          }
+          // Don't prevent default so lightbox click still works
+        } else {
+          el.classList.add('touch-active');
+        }
+      }, { passive: true });
+
+      if (!toggleMode) {
+        el.addEventListener('touchend', () => {
+          setTimeout(() => el.classList.remove('touch-active'), 300);
+        }, { passive: true });
+        el.addEventListener('touchcancel', () => {
+          el.classList.remove('touch-active');
+        }, { passive: true });
+      }
+    });
+  };
+
+  // Cards: brief flash on tap
+  addTouchHover('.card', false);
+  // Social links: brief flash
+  addTouchHover('.social-link', false);
+  // Gallery items: toggle color on tap
+  addTouchHover('.gallery-item', true);
+  // About images: toggle color on tap
+  addTouchHover('.about-img', true);
+
+  // Dismiss touch-active when tapping elsewhere
+  document.addEventListener('touchstart', (e) => {
+    if (activeTouchEl && !activeTouchEl.contains(e.target)) {
+      activeTouchEl.classList.remove('touch-active');
+      activeTouchEl = null;
     }
-    const themeToggle = document.getElementById('themeToggle');
-    const loadTheme = () => {
-      const saved = localStorage.getItem('sobek-theme');
-      if(saved === 'light') { document.body.classList.add('light-mode'); updateIcon(true); }
-      else { document.body.classList.remove('light-mode'); updateIcon(false); if(!saved) localStorage.setItem('sobek-theme','dark'); }
-    };
-    const updateIcon = (isLight) => {
-      if(themeToggle) themeToggle.innerHTML = isLight ? `<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>` : `<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-    };
-    if(themeToggle) themeToggle.addEventListener('click',()=>{ const isLight=document.body.classList.toggle('light-mode'); localStorage.setItem('sobek-theme',isLight?'light':'dark'); updateIcon(isLight); });
-    loadTheme();
-    const cursor = document.getElementById('cursor');
-    const hoverEls = document.querySelectorAll('.card, .gallery-item, .social-link, .nav-link, .logo-container, .contact-item, .about-img');
-    document.addEventListener('mousemove',(e)=>{ if(cursor) { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; } });
-    hoverEls.forEach(el=>{ el.addEventListener('mouseenter',()=>cursor&&cursor.classList.add('hover')); el.addEventListener('mouseleave',()=>cursor&&cursor.classList.remove('hover')); });
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll',()=>{ if(navbar) navbar.classList.toggle('scrolled', window.scrollY>50); });
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    if(menuToggle) menuToggle.addEventListener('click',()=>{ menuToggle.classList.toggle('active'); if(navLinks) navLinks.classList.toggle('active'); });
-    document.querySelectorAll('.nav-link').forEach(link=>{ link.addEventListener('click',(e)=>{ const href=link.getAttribute('href'); if(href&&href!=='#'){ e.preventDefault(); const target=document.querySelector(href); if(target){ target.scrollIntoView({behavior:'smooth'}); if(navLinks&&navLinks.classList.contains('active')){ navLinks.classList.remove('active'); if(menuToggle) menuToggle.classList.remove('active'); } } } else if(href==='#'){ window.scrollTo({top:0,behavior:'smooth'}); if(navLinks&&navLinks.classList.contains('active')){ navLinks.classList.remove('active'); if(menuToggle) menuToggle.classList.remove('active'); } } }); });
-    const observer = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('animate-in'); observer.unobserve(entry.target); } }); },{ threshold:0.15, rootMargin:"0px 0px -30px 0px" });
-    document.querySelectorAll('.section h2, .card, .gallery-item').forEach(el=>observer.observe(el));
-    document.querySelectorAll('.card').forEach((card,i)=>card.style.setProperty('--index',i));
-    const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img');
-    const openLightbox=(src)=>{ if(lightboxImg) lightboxImg.src=src; if(lightbox) lightbox.classList.add('active'); document.body.style.overflow='hidden'; };
-    const closeLightbox=()=>{ if(lightbox) lightbox.classList.remove('active'); document.body.style.overflow=''; };
-    document.querySelectorAll('.about-img, .gallery-item img').forEach(img=>img.addEventListener('click',(e)=>{ e.stopPropagation(); openLightbox(img.src); }));
-    document.querySelector('.close-lightbox')?.addEventListener('click',closeLightbox);
-    if(lightbox) lightbox.addEventListener('click',(e)=>{ if(e.target===lightbox) closeLightbox(); });
-    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeLightbox(); });
-  })();
+  }, { passive: true });
+
+  /* ---- LIGHTBOX ---- */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  const openLightbox = (src) => {
+    if (lightboxImg) lightboxImg.src = src;
+    if (lightbox) lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeLightbox = () => {
+    if (lightbox) lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // About images: tap opens lightbox (touch-active toggled separately above)
+  document.querySelectorAll('.about-img').forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openLightbox(img.src);
+    });
+  });
+
+  // Gallery items: first tap = color reveal, second tap = lightbox
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', (e) => {
+      const parent = img.closest('.gallery-item');
+      // On non-touch devices open directly; on touch, only open if already active
+      if (!isTouchDevice() || (parent && parent.classList.contains('touch-active'))) {
+        e.stopPropagation();
+        openLightbox(img.src);
+      }
+      // On touch, first tap is handled by touchstart (adds touch-active)
+    });
+  });
+
+  document.querySelector('.close-lightbox')?.addEventListener('click', closeLightbox);
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+})();
 </script>
 </body>
 </html>
