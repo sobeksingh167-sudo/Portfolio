@@ -35,7 +35,6 @@
       --highlight-border: #fff;
       --info-row-border: rgba(255,255,255,0.08);
       --hero-overlay: brightness(0.4) contrast(1.2) grayscale(0.2);
-      /* iOS FIX: Use named classes instead of CSS var for filter, vars don't animate well on Safari */
       --img-filter: grayscale(100%);
       --img-hover-filter: grayscale(0%);
       --hero-title-color: #ffffff;
@@ -71,7 +70,6 @@
       color: var(--text);
       overflow-x: hidden;
       transition: background-color 0.4s ease, color 0.3s ease;
-      /* iOS FIX: prevent bounce/elastic scroll from revealing white */
       background-attachment: fixed;
     }
 
@@ -82,7 +80,6 @@
       position: fixed; border-radius: 50%;
       pointer-events: none;
       transform: translate(-50%, -50%);
-      /* iOS FIX: removed mix-blend-mode:difference which causes Safari rendering bugs */
       box-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 24px rgba(255,255,255,0.4);
       z-index: 9999;
       transition: width 0.3s ease, height 0.3s ease;
@@ -105,7 +102,6 @@
       border-bottom: 1px solid var(--border-light);
       z-index: 1000;
       transition: all 0.5s cubic-bezier(0.2,0.9,0.4,1.1), background 0.3s ease;
-      /* iOS FIX: force GPU layer */
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
     }
@@ -159,41 +155,33 @@
     .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); transition: left 0.7s ease; }
     .card:hover::before, .card.touch-active::before { left: 100%; }
     .card.animate-in { opacity: 1; transform: translateY(0); transition-delay: calc(var(--index, 0) * 0.08s); }
-    /* iOS FIX: .touch-active replaces :hover for cards on touch devices */
     .card:hover, .card.touch-active { transform: translateY(-10px) scale(1.01); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px var(--primary-glow); }
     .card h3 { font-family: 'Orbitron', monospace; font-size: 1.5rem; margin-bottom: 0.9rem; color: var(--accent); letter-spacing: 1px; }
     .card p { color: var(--text-muted); line-height: 1.5; }
 
-    /* ---------- GALLERY ---------- */
+    /* ---------- GALLERY (PHOTO PORTFOLIO) ---------- */
     .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin-top: 2rem; }
     .gallery-item { position: relative; overflow: hidden; border-radius: 28px; cursor: pointer; aspect-ratio: 4/5; background: #0a0a0a; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); opacity: 0; transform: translateY(40px); }
     .gallery-item.animate-in { opacity: 1; transform: translateY(0); }
-
-    /* iOS FIX: Use class-based filter instead of :hover on img directly */
     .gallery-item img {
       width: 100%; height: 100%; object-fit: cover;
-      /* iOS FIX: Use -webkit-filter as well */
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
       transition: transform 0.9s cubic-bezier(0.16,1,0.3,1), -webkit-filter 0.6s ease, filter 0.6s ease;
-      /* iOS FIX: GPU acceleration for smooth filter transition */
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
       will-change: filter, transform;
     }
-    /* Activated via JS .touch-active class on parent OR :hover on desktop */
     .gallery-item:hover img,
     .gallery-item.touch-active img {
       transform: scale(1.08) translateZ(0);
       -webkit-filter: grayscale(0%);
       filter: grayscale(0%);
     }
-
     .gallery-overlay {
       position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
       padding: 1.5rem;
-      /* iOS FIX: transform instead of display:none for smoother animation */
       transform: translateY(100%);
       -webkit-transform: translateY(100%);
       transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), -webkit-transform 0.5s cubic-bezier(0.16,1,0.3,1);
@@ -205,7 +193,7 @@
     }
     .gallery-overlay p { color: white; font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; }
 
-    /* ---------- ABOUT ---------- */
+    /* ---------- ABOUT (THE CREATIVE FORCE) ---------- */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
     .about-text p { line-height: 1.7; color: var(--text-muted); margin-bottom: 1.5rem; opacity: 0; transform: translateX(-18px); animation: slideReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
     .about-text p:nth-child(1) { animation-delay: 0.1s; }
@@ -214,8 +202,6 @@
     @keyframes slideReveal { to { opacity: 1; transform: translateX(0); } }
     .highlight-text { border-left: 3px solid var(--highlight-border); padding-left: 1.3rem; color: var(--text); }
     .about-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-
-    /* iOS FIX: same class-based approach for about images */
     .about-img {
       width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover;
       border-radius: 20px;
@@ -225,7 +211,6 @@
       cursor: pointer;
       opacity: 0; transform: scale(0.96);
       animation: fadeScaleIn 0.7s forwards;
-      /* iOS FIX: GPU layer */
       -webkit-transform: translateZ(0);
       will-change: filter, transform;
     }
@@ -242,7 +227,7 @@
     }
     .about-img-wide { grid-column: span 2; aspect-ratio: 16/9; }
 
-    /* ---------- INFO GRID ---------- */
+    /* ---------- INFO GRID (Experience & Highlights + Creative Arsenal) ---------- */
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
     .info-card { background: var(--card-bg); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.8rem; transition: all 0.5s cubic-bezier(0.16,1,0.3,1); opacity: 0; transform: translateY(30px); animation: cardGlide 0.6s forwards; }
     .info-card:nth-child(1) { animation-delay: 0.2s; }
@@ -274,7 +259,7 @@
     .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); -webkit-backdrop-filter: blur(28px); backdrop-filter: blur(28px); z-index: 2000; justify-content: center; align-items: center; cursor: pointer; opacity: 0; transition: opacity 0.3s ease; }
     .lightbox.active { display: flex; animation: fadeInModal 0.3s forwards; }
     @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-    .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; animation: zoomIn 0.4s cubic-bezier(0.16,1,0.3,1); /* iOS FIX: no filter transform issues */ }
+    .lightbox-img { max-width: 90%; max-height: 90%; object-fit: contain; animation: zoomIn 0.4s cubic-bezier(0.16,1,0.3,1); }
     @keyframes zoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .close-lightbox { position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: white; cursor: pointer; transition: all 0.3s ease; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); }
     .close-lightbox:hover { transform: rotate(90deg); background: rgba(255,255,255,0.25); }
@@ -336,8 +321,8 @@
   <div class="navbar-right">
     <div class="nav-links">
       <a href="#about" class="nav-link">About</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
       <a href="#services" class="nav-link">Services</a>
-      <a href="#gallery" class="nav-link">Portfolio</a>
       <a href="#contact" class="nav-link">Contact</a>
     </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Light/Dark mode">
@@ -354,6 +339,7 @@
     <div class="tagline-wrapper" id="taglineWrapper"></div>
   </section>
 
+  <!-- THE CREATIVE FORCE SECTION (About Text + Gallery + Info Grid: Experience & Highlights + Creative Arsenal) -->
   <section id="about" class="section">
     <div class="container">
       <h2>THE CREATIVE FORCE</h2>
@@ -369,6 +355,8 @@
           <img class="about-img about-img-wide" src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-31%20at%201.01.55%20AM.jpeg?raw=true" alt="Concert">
         </div>
       </div>
+      
+      <!-- Experience & Highlights and Creative Arsenal Cards -->
       <div class="info-grid">
         <div class="info-card"><h3>Experience & Highlights</h3>
           <div class="info-row"><span>Khajuraho Intl Film Festival</span><span>2025</span></div>
@@ -386,6 +374,22 @@
     </div>
   </section>
 
+  <!-- PHOTO PORTFOLIO SECTION (moved directly after THE CREATIVE FORCE) -->
+  <section id="portfolio" class="section">
+    <div class="container">
+      <h2>PHOTO PORTFOLIO</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.18.50%20AM.jpeg?raw=true" alt="Filmmaker"><div class="gallery-overlay"><p>Filmmaker (Director)</p></div></div>
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/DSC02896.jpg?raw=true" alt="Fashion"><div class="gallery-overlay"><p>Fashion Photographer</p></div></div>
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/4diwari.jpeg?raw=true" alt="Concert"><div class="gallery-overlay"><p>Concert Photographer</p></div></div>
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.26.54%20AM.jpeg?raw=true" alt="Street"><div class="gallery-overlay"><p>Street Photographer</p></div></div>
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.41.31%20AM.jpeg?raw=true" alt="Spec Ad"><div class="gallery-overlay"><p>Commercial Spec Ads</p></div></div>
+        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/creative.jpeg?raw=true" alt="Creative Direction"><div class="gallery-overlay"><p>Creative Director</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION (WHAT I DO) -->
   <section id="services" class="section">
     <div class="container">
       <h2>WHAT I DO</h2>
@@ -396,20 +400,6 @@
         <div class="card"><h3>Street Photographer</h3><p>Authentic urban narratives. Candid moments in monochrome and color.</p></div>
         <div class="card"><h3>Commercial Spec Ads</h3><p>Conceptualizing & producing high-end spec advertisements. Triumph Bikes & creative projects.</p></div>
         <div class="card"><h3>Creative Director</h3><p>Crafting unique fashion narratives and impactful campaigns.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="gallery" class="section">
-    <div class="container">
-      <h2>PHOTO PORTFOLIO</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.18.50%20AM.jpeg?raw=true" alt="Filmmaker"><div class="gallery-overlay"><p>Filmmaker (Director)</p></div></div>
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.14.32%20AM%20(1).jpeg?raw=true" alt="Fashion"><div class="gallery-overlay"><p>Fashion Photographer</p></div></div>
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/4diwari.jpeg?raw=true" alt="Concert"><div class="gallery-overlay"><p>Concert Photographer</p></div></div>
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.26.54%20AM.jpeg?raw=true" alt="Street"><div class="gallery-overlay"><p>Street Photographer</p></div></div>
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/WhatsApp%20Image%202026-03-30%20at%2012.41.31%20AM.jpeg?raw=true" alt="Spec Ad"><div class="gallery-overlay"><p>Commercial Spec Ads</p></div></div>
-        <div class="gallery-item"><img src="https://github.com/sobeksingh167-sudo/img/blob/main/creative.jpeg?raw=true" alt="Creative Direction"><div class="gallery-overlay"><p>Creative Director</p></div></div>
       </div>
     </div>
   </section>
@@ -444,7 +434,6 @@
 (function() {
   'use strict';
 
-  /* ---- TAGLINE ---- */
   const taglineWords = "Filmmaker | Photographer | Visual Storyteller".split(' ');
   const wrapper = document.getElementById("taglineWrapper");
   if (wrapper) {
@@ -457,7 +446,6 @@
     });
   }
 
-  /* ---- THEME ---- */
   const themeToggle = document.getElementById('themeToggle');
   const updateIcon = (isLight) => {
     if (!themeToggle) return;
@@ -479,7 +467,6 @@
   });
   loadTheme();
 
-  /* ---- CURSOR (desktop only) ---- */
   const cursor = document.getElementById('cursor');
   const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   if (!isTouchDevice() && cursor) {
@@ -493,13 +480,11 @@
     });
   }
 
-  /* ---- NAVBAR SCROLL ---- */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
   }, { passive: true });
 
-  /* ---- MOBILE MENU ---- */
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (menuToggle) {
@@ -527,7 +512,6 @@
     });
   });
 
-  /* ---- INTERSECTION OBSERVER (animate-in) ---- */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -539,22 +523,12 @@
   document.querySelectorAll('.section h2, .card, .gallery-item').forEach(el => observer.observe(el));
   document.querySelectorAll('.card').forEach((card, i) => card.style.setProperty('--index', i));
 
-  /* ---- iOS / SAFARI TOUCH FIX ----
-     Safari on iOS doesn't fire :hover on touch. We use touchstart/touchend
-     to toggle a .touch-active class, which mirrors all the hover CSS.
-     For gallery items & about images: tap = show color + overlay (toggle).
-     Tap again or tap elsewhere = revert to B&W.
-  */
-  let activeTouchEl = null; // track currently "hovered" touch element
-
+  let activeTouchEl = null;
   const addTouchHover = (selector, toggleMode = false) => {
     document.querySelectorAll(selector).forEach(el => {
       el.addEventListener('touchstart', (e) => {
         if (toggleMode) {
-          // For gallery + about images: tap to toggle color
-          if (activeTouchEl && activeTouchEl !== el) {
-            activeTouchEl.classList.remove('touch-active');
-          }
+          if (activeTouchEl && activeTouchEl !== el) activeTouchEl.classList.remove('touch-active');
           if (el.classList.contains('touch-active')) {
             el.classList.remove('touch-active');
             activeTouchEl = null;
@@ -562,33 +536,20 @@
             el.classList.add('touch-active');
             activeTouchEl = el;
           }
-          // Don't prevent default so lightbox click still works
         } else {
           el.classList.add('touch-active');
         }
       }, { passive: true });
-
       if (!toggleMode) {
-        el.addEventListener('touchend', () => {
-          setTimeout(() => el.classList.remove('touch-active'), 300);
-        }, { passive: true });
-        el.addEventListener('touchcancel', () => {
-          el.classList.remove('touch-active');
-        }, { passive: true });
+        el.addEventListener('touchend', () => setTimeout(() => el.classList.remove('touch-active'), 300), { passive: true });
+        el.addEventListener('touchcancel', () => el.classList.remove('touch-active'), { passive: true });
       }
     });
   };
-
-  // Cards: brief flash on tap
   addTouchHover('.card', false);
-  // Social links: brief flash
   addTouchHover('.social-link', false);
-  // Gallery items: toggle color on tap
   addTouchHover('.gallery-item', true);
-  // About images: toggle color on tap
   addTouchHover('.about-img', true);
-
-  // Dismiss touch-active when tapping elsewhere
   document.addEventListener('touchstart', (e) => {
     if (activeTouchEl && !activeTouchEl.contains(e.target)) {
       activeTouchEl.classList.remove('touch-active');
@@ -596,52 +557,25 @@
     }
   }, { passive: true });
 
-  /* ---- LIGHTBOX ---- */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
-
-  const openLightbox = (src) => {
-    if (lightboxImg) lightboxImg.src = src;
-    if (lightbox) lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  };
-  const closeLightbox = () => {
-    if (lightbox) lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  };
-
-  // About images: tap opens lightbox (touch-active toggled separately above)
-  document.querySelectorAll('.about-img').forEach(img => {
-    img.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openLightbox(img.src);
-    });
-  });
-
-  // Gallery items: first tap = color reveal, second tap = lightbox
+  const openLightbox = (src) => { if (lightboxImg) lightboxImg.src = src; if (lightbox) lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; };
+  const closeLightbox = () => { if (lightbox) lightbox.classList.remove('active'); document.body.style.overflow = ''; };
+  document.querySelectorAll('.about-img').forEach(img => img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }));
   document.querySelectorAll('.gallery-item img').forEach(img => {
     img.addEventListener('click', (e) => {
       const parent = img.closest('.gallery-item');
-      // On non-touch devices open directly; on touch, only open if already active
       if (!isTouchDevice() || (parent && parent.classList.contains('touch-active'))) {
         e.stopPropagation();
         openLightbox(img.src);
       }
-      // On touch, first tap is handled by touchstart (adds touch-active)
     });
   });
-
   document.querySelector('.close-lightbox')?.addEventListener('click', closeLightbox);
-  if (lightbox) {
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-  });
-
+  if (lightbox) lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 })();
 </script>
 </body>
 </html>
+```
